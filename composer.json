@@ -1,0 +1,22 @@
+{
+    "name": "kiddyu/beanbun-parser",
+    "description" : "beanbun-parser 是 Beanbun 的数据抽取插件。抽取规则的选择器语法类似于 jQuery，使用简单。",
+    "type": "application",
+    "keywords": ["parser", "phpQuery", "beanbun"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kidd Yu",
+            "email": "58631254@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "jaeger/querylist": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Beanbun\\Middleware\\": "src/"
+        }
+    }
+}

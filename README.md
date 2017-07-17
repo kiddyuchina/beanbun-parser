@@ -1,14 +1,13 @@
-beanbun-parser
-简介
-----
-beanbun-parser 是 Beanbun 的数据抽取插件。通过设置抽取规则，在每次爬取页面之后，可以自动提取页面数据到数组中以供使用。抽取规则的选择器语法类似于 jQuery，使用简单。 
-插件使用了 [phpQuery]() 和 [querylist]() 两个包。
+beanbun-parser 
 
-使用
-----
-只需实例化后，通过 Beanbun::middleware() 加载即可。实例化时，可接受一个参数，类型为数组，内容为对 beanbun-parser 的配置，加载后 Beanbun 实例会增加 $parser 属性，属性值即为 beanbun-parser 实例。 
-目前只接受一个选项 auto，即插件是否按照规则自动抽取数据，默认为 true。 
-auto 为 true 时，Beanbun 实例会增加 $fields、$data 两个属性。$fields 为抽取规则，$data 为抽取到的数据。 
+### 简介
+beanbun-parser 是 Beanbun 的数据抽取插件。通过设置抽取规则，在每次爬取页面之后，可以自动提取页面数据到数组中以供使用。抽取规则的选择器语法类似于 jQuery，使用简单。  
+插件使用了 [phpQuery]() 和 [querylist]() 两个包。 
+
+### 使用
+只需实例化后，通过 Beanbun::middleware() 加载即可。实例化时，可接受一个参数，类型为数组，内容为对 beanbun-parser 的配置，加载后 Beanbun 实例会增加 $parser 属性，属性值即为 beanbun-parser 实例。  
+目前只接受一个选项 auto，即插件是否按照规则自动抽取数据，默认为 true。  
+auto 为 true 时，Beanbun 实例会增加 $fields、$data 两个属性。$fields 为抽取规则，$data 为抽取到的数据。  
 
 ```php
 <?php
@@ -23,45 +22,44 @@ $parser = new Parser;
 $beanbun->middleware($parser);
 ```
 
-Beanbun 属性
-----
-Beanbun::$fields 
-$fields 每个抽取项可以包含一下元素 
-name: 此项数据的变量名 
-selector: 抽取规则。包含两个元素，前一个为 jQuery 风格的选择器，后一个为要抽取的属性，可选为 text、html、[HTML标签属性]:如src、href、name、data-src等任意HTML标签属性名 
-repeated: 定义抽取到的内容是否是有多项, 默认 false 
-required: 定义该 field 的值是否必须, 默认 false 
-children: 为此 field 定义子项，子项的定义仍然是一个fields数组，没错, 这是一个树形结构 
+### Beanbun 属性  
+#### Beanbun::$fields  
+$fields 每个抽取项可以包含一下元素  
+name: 此项数据的变量名  
+selector: 抽取规则。包含两个元素，前一个为 jQuery 风格的选择器，后一个为要抽取的属性，可选为 text、html、[HTML标签属性]:如src、href、name、data-src等任意HTML标签属性名  
+repeated: 定义抽取到的内容是否是有多项, 默认 false  
+required: 定义该 field 的值是否必须, 默认 false  
+children: 为此 field 定义子项，子项的定义仍然是一个fields数组，没错, 这是一个树形结构  
 ```php
 $beanbun->fields = [
-	[
-		'name' => 'title',
-		'selector' => ['title', 'text']
-	],
-	[
-		'name' => 'template',
-		'children' => [
-			[
-				'name' => 'title',
-				'selector' => ['.js-course-list li h5', 'text'],
-				'repeated' => true,
-			],
-			[
-				'name' => 'url',
-				'selector' => ['.js-course-list li .course-list-img a', 'href'],
-				'repeated' => true,
-			],
-			[
-				'name' => 'image',
-				'selector' => ['.js-course-list li .course-list-img img', 'src'],
-				'repeated' => true,
-			]
-		]
-	]
+    [
+        'name' => 'title',
+        'selector' => ['title', 'text']
+    ],
+    [
+        'name' => 'template',
+        'children' => [
+            [
+                'name' => 'title',
+                'selector' => ['.js-course-list li h5', 'text'],
+                'repeated' => true,
+            ],
+            [
+                'name' => 'url',
+                'selector' => ['.js-course-list li .course-list-img a', 'href'],
+                'repeated' => true,
+            ],
+            [
+                'name' => 'image',
+                'selector' => ['.js-course-list li .course-list-img img', 'src'],
+                'repeated' => true,
+            ]
+        ]
+    ]
 ];
 ```
 
-Beanbun::$data 
+#### Beanbun::$data 
 $data 是抽取到的数据，在 Beanbun 中 afterDownloadPage 和其之后的回调函数中都可以使用 
 ```php
 $beanbun->afterDownloadPage = function($beanbun) {
@@ -70,7 +68,7 @@ $beanbun->afterDownloadPage = function($beanbun) {
 
 // 上面例子中抽取到的数据为
 $beanbun->data = [
-	'title' => '企业网站模板 - Finecms模板 Duxcms模板 Doccms模板 稻壳cms模板',
+    'title' => '企业网站模板 - Finecms模板 Duxcms模板 Doccms模板 稻壳cms模板',
     'template' => [
         'title' => [
             '旅游类通用型手机站模板',
@@ -118,26 +116,24 @@ $beanbun->data = [
 ];
 ```
 
-Beanbun::$parser 可用方法
-----
-getData 
-接受一个参数 $feilds，格式与上面提到的 Beanbun::$fields 相同。
+### Beanbun::$parser 可用方法  
+getData  
+接受一个参数 $feilds，格式与上面提到的 Beanbun::$fields 相同。 
 ```php
 $beanbun->afterDownloadPage = function($beanbun) {
     $data = $beanbun->parser->getData([
-    	[
-			'name' => 'title',
-			'selector' => ['title', 'text']
-		]
-	]);
-	print_r($data);
+        [
+            'name' => 'title',
+            'selector' => ['title', 'text']
+        ]
+    ]);
+    print_r($data);
 };
 
 ```
 
 
-完整示例
-----
+### 完整示例
 ``` php
 use Beanbun\Beanbun;
 use Beanbun\Middleware\Parser;
@@ -150,35 +146,35 @@ $beanbun->count = 5;
 $beanbun->seed = 'http://www.950d.com/';
 $beanbun->max = 100;
 $beanbun->urlRegex = [
-	'/http:\/\/www.950d.com\/list-1.html\?page=(\d*)/'
+    '/http:\/\/www.950d.com\/list-1.html\?page=(\d*)/'
 ];
 
 $beanbun->middleware(new Parser());
 $beanbun->fields = [
-	[
-		'name' => 'title',
-		'selector' => ['title', 'text']
-	],
-	[
-		'name' => 'template',
-		'children' => [
-			[
-				'name' => 'title',
-				'selector' => ['.js-course-list li h5', 'text'],
-				'repeated' => true,
-			],
-			[
-				'name' => 'url',
-				'selector' => ['.js-course-list li .course-list-img a', 'href'],
-				'repeated' => true,
-			],
-			[
-				'name' => 'image',
-				'selector' => ['.js-course-list li .course-list-img img', 'src'],
-				'repeated' => true,
-			]
-		]
-	]
+    [
+        'name' => 'title',
+        'selector' => ['title', 'text']
+    ],
+    [
+        'name' => 'template',
+        'children' => [
+            [
+                'name' => 'title',
+                'selector' => ['.js-course-list li h5', 'text'],
+                'repeated' => true,
+            ],
+            [
+                'name' => 'url',
+                'selector' => ['.js-course-list li .course-list-img a', 'href'],
+                'repeated' => true,
+            ],
+            [
+                'name' => 'image',
+                'selector' => ['.js-course-list li .course-list-img img', 'src'],
+                'repeated' => true,
+            ]
+        ]
+    ]
 ];
 
 $beanbun->afterDownloadPage = function($beanbun) {

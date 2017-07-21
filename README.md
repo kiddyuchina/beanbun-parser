@@ -4,6 +4,12 @@
 beanbun-parser 是 Beanbun 的数据抽取插件。通过设置抽取规则，在每次爬取页面之后，可以自动提取页面数据到数组中以供使用。抽取规则的选择器语法类似于 jQuery，使用简单。  
 插件使用了 [phpQuery]() 和 [querylist]() 两个包。 
 
+### 安装
+通过 composer 进行安装。
+```
+$ composer require kiddyu/beanbun-parser
+```
+
 ### 使用
 只需实例化后，通过 Beanbun::middleware() 加载即可。实例化时，可接受一个参数，类型为数组，内容为对 beanbun-parser 的配置，加载后 Beanbun 实例会增加 $parser 属性，属性值即为 beanbun-parser 实例。  
 目前只接受一个选项 auto，即插件是否按照规则自动抽取数据，默认为 true。  
